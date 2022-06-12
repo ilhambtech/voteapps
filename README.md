@@ -1,7 +1,7 @@
 Voting App
 =========  
 
-Getting started
+Getting started  
 ---------------
 
 Download [Docker](https://www.docker.com/products/overview).   
