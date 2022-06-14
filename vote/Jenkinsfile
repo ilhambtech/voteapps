@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             containerTemplate {
                 name 'maven'
-                image 'maven:3.8.1-jdk-8'
+                image 'docker:dind'
                 command 'sleep'
                 args '99d'
                 privileged true
