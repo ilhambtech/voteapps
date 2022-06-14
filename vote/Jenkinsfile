@@ -16,7 +16,7 @@ pipeline {
           sh """
               ls -lah; 
               cd vote;
-              /kaniko/executor --context `pwd` --verbosity debug --destination ilosaurus/vote:latest
+              /kaniko/executor --context `pwd` --verbosity debug --destination harbor1.btech.id/library/vote:latest
           """
         }
           
