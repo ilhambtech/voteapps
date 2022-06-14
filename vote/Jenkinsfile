@@ -1,15 +1,24 @@
 pipeline {
-  agent { label 'jenkins-jenkins-agent' }
+  agent kubernetes
   stages {
     stage('Run docker') {
-      
+  
       steps {
+        container('jnlp'){
+          sh """
+              cat /etc/os-release
+              ls -lah; 
+              cd vote;
+          """
+        }
+        
+        container('kaniko'){
           sh """
               ls -lah; 
               cd vote;
               /kaniko/executor --context `pwd` --verbosity debug --destination ilosaurus/vote:latest
           """
-        
+        }
           
       }
     }
