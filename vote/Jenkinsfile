@@ -1,0 +1,14 @@
+pipeline {
+    agent { label 'docker' }
+        stages {
+            stage('Run docker') {
+            steps {
+                container('docker'){
+                    sh 'ls -lah; pwd;'   
+                }
+                
+            }
+        }
+    }
+}
+
