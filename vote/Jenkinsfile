@@ -5,6 +5,7 @@ pipeline {
             steps {
                 container('docker-client'){
                     sh """
+                        
                         cat /etc/os-release;
                         ls -lah;
                         cd vote;
