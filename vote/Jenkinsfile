@@ -30,6 +30,7 @@ pipeline {
                 container('builder'){
                     sh """
                         ls -lah; 
+                        cd vote;
                         /kaniko/executor --context `pwd` --verbosity debug --destination ilosaurus/vote:latest
                     """
                 }
