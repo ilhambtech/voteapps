@@ -4,7 +4,7 @@ pipeline {
             stage('Run docker') {
             steps {
                 container('docker'){
-                    sh 'docker build -t ilosaurus/vote vote/Dockerfile'   
+                    sh 'ls -lah ; docker build -t ilosaurus/vote .'   
                 }
                 
             }
