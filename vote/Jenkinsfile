@@ -4,7 +4,11 @@ pipeline {
             stage('Run docker') {
             steps {
                 container('docker'){
-                    sh 'cat /etc/os-release; docker version; ls -lah ; cd vote; docker build -t ilosaurus/vote .'   
+                    sh """
+                        cat /etc/os-release; docker version; ls -lah;
+                        cd vote;
+                        buildctl build --frontend dockerfile.v0 --local context=. --local dockerfile=. --output type=image,name=vote,push=true
+                    """
                 }
                 
             }
