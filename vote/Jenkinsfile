@@ -1,5 +1,5 @@
 pipeline {
-  agent { kubernetes } 
+  agent { kubernetes 'kubernetes' } 
   stages {
     stage('Run docker') {
   
