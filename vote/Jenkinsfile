@@ -31,10 +31,7 @@ pipeline {
             steps {
                 container('builder'){
                     sh """
-                      
-                        cat /etc/os-release;
-                        ls -lah;
-                        
+                        ls -lah; 
                     """
                 }
                 
