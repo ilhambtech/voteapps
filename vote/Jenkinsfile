@@ -1,27 +1,39 @@
 pipeline {
-    agent {
-        kubernetes {
-            containerTemplate {
-                name 'maven'
-                image 'moby/buildkit:master'
-                command 'sleep'
-                args '99d'
-                privileged true
-            }
-        }
+  agent {
+    kubernetes {
+      label 'jenkinsrun'
+      defaultContainer 'builder'
+      yaml """
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: builder
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - /busybox/cat
+    tty: true
+    volumeMounts:
+      - name: docker-config
+        mountPath: /kaniko/.docker
+  volumes:
+    - name: docker-config
+      configMap:
+        name: docker-config
+"""
     }
 
     stages {
         stage('Run docker') {
             steps {
-                container('maven'){
+                container('builder'){
                     sh """
-                        
+                      
                         cat /etc/os-release;
                         ls -lah;
-                        cd vote;
-                        which buildctl ;
-                        buildctl build --frontend dockerfile.v0 --local context=. --local dockerfile=. --output type=image
+                        
                     """
                 }
                 
