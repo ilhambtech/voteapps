@@ -1,41 +1,41 @@
 pipeline {
-  agent {
-    kubernetes {
-      yaml """
-        kind: Pod
-        metadata:
-          name: kaniko
-        spec:
-          containers:
-          - name: builder
-            image: gcr.io/kaniko-project/executor:debug
-            imagePullPolicy: Always
-            command:
-            - /busybox/cat
-            tty: true
-            volumeMounts:
-              - name: docker-config
-                mountPath: /kaniko/.docker
-          volumes:
-            - name: docker-config
-              configMap:
-                name: docker-config
-      """
-    }
-  }
-
+    agent none
     stages {
-        stage('Run docker') {
-            steps {
-                container('builder'){
-                    sh """
-                        ls -lah; 
-                        cd vote;
-                        /kaniko/executor --context `pwd` --verbosity debug --destination ilosaurus/vote:latest
-                    """
-                }
-                
+      stage('Run docker') {
+        steps {
+          agent {
+            kubernetes {
+              yaml """
+                kind: Pod
+                metadata:
+                  name: kaniko
+                spec:
+                  containers:
+                  - name: builder
+                    image: gcr.io/kaniko-project/executor:debug
+                    imagePullPolicy: Always
+                    command:
+                    - /busybox/cat
+                    tty: true
+                    volumeMounts:
+                      - name: docker-config
+                        mountPath: /kaniko/.docker
+                  volumes:
+                    - name: docker-config
+                      configMap:
+                        name: docker-config
+              """
             }
+          }
+          container('builder'){
+            sh """
+                ls -lah; 
+                cd vote;
+                /kaniko/executor --context `pwd` --verbosity debug --destination ilosaurus/vote:latest
+            """
+          }
+            
         }
+      }
     }
 }
