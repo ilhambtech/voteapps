@@ -3,8 +3,7 @@ pipeline {
         stages {
             stage('Run docker') {
             steps {
-                container('docker'){
-                    privileged true
+                container('docker-client'){
                     sh """
                         cat /etc/os-release;
                         ls -lah;
