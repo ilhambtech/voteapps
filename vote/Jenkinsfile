@@ -5,7 +5,8 @@ pipeline {
             steps {
                 container('docker'){
                     sh """
-                        cat /etc/os-release; docker version; ls -lah;
+                        cat /etc/os-release;
+                        ls -lah;
                         cd vote;
                         buildctl build --frontend dockerfile.v0 --local context=. --local dockerfile=. --output type=image,name=vote,push=true
                     """
