@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             containerTemplate {
                 name 'maven'
-                image 'docker:dind'
+                image 'moby/buildkit:master'
                 command 'sleep'
                 args '99d'
                 privileged true
@@ -20,8 +20,7 @@ pipeline {
                         cat /etc/os-release;
                         ls -lah;
                         cd vote;
-                        which docker;
-                        docker version;
+                        which buildctl ;
                     """
                 }
                 
