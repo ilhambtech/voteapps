@@ -4,6 +4,7 @@ pipeline {
             stage('Run docker') {
             steps {
                 container('docker'){
+                    privileged true
                     sh """
                         cat /etc/os-release;
                         ls -lah;
