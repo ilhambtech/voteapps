@@ -1,0 +1,21 @@
+pipeline {
+  agent { label 'docker' } 
+  stages {
+    stage('Run docker') {
+  
+      steps {
+        container('jnlp'){
+          sh """
+              cat /etc/os-release
+              ls -lah; 
+              cd vote;
+          """
+          sh(returnStdout: true, script: "git describe --tags --abbrev=0").trim()
+
+        }
+        
+          
+      }
+    }
+  }
+}
